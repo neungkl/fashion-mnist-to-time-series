@@ -3,7 +3,8 @@ services:
   keras:
     build: .
     volumes:
-      - .:/home/work
+      - ./src:/home/work
+      - ./fasion-mnist-data:/root/.keras/datasets/fashion-mnist
     ports:
       - 8888:8888
       - 6006:6006
