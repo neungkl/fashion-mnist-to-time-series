@@ -2,12 +2,22 @@ import dtwco
 from sklearn.neighbors import KNeighborsClassifier
 
 class KnnDtw:
-    def __init__(self, n_neighbors=5, dtw_constraint=None):
-        self.clf = self.construct_knn_classifier(n_neighbors=n_neighbors, dtw_constraint=dtw_constraint)
+    def __init__(self, n_neighbors=5, dtw_constraint=None, k_constraint=None):
+        self.clf = self.construct_knn_classifier(
+            n_neighbors=n_neighbors,
+            dtw_constraint=dtw_constraint,
+            k_constraint=k_constraint
+        )
     
-    def construct_knn_classifier(self, n_neighbors=5, dtw_constraint=None):
+    def construct_knn_classifier(self, n_neighbors=5, dtw_constraint=None, k_constraint=None):
         # Constructs the kNN Regressor under a DTW metric
-        dtw_metric = lambda x, y: dtwco.dtw(x, y, metric='euclidean', constraint=dtw_constraint, dist_only=True)
+        dtw_metric = lambda x, y: dtwco.dtw(
+            x, y,
+            metric='euclidean',
+            constraint=dtw_constraint,
+            k=k_constraint,
+            dist_only=True
+        )
         clf = KNeighborsClassifier(n_neighbors=5, metric=dtw_metric, n_jobs=1)
         return clf
     
